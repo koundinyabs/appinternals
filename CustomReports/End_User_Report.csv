@@ -1,0 +1,17 @@
+version,1
+name,End User Report
+title,Performance & Usage Report
+description,"Activity and Performance Report"
+header1, Unique Users
+search, | unique -group_by user.ip -minutes 30
+header1,Transaction Count and Response time by Country
+search, | transactioncount -group_by country  -visualization table
+search, | timeseries -group_by country -order_by avg(responsetime) -calc avg(responsetime) -limit 100
+header1, Response Time by Country
+search,  transactiontype='*' | timeseries -group_by country -order_by avg(responsetime) -calc avg(responsetime) -limit 100
+header1, Transaction Count and Response Time by Browser
+search, | transactioncount -group_by browser
+search, | timeseries -group_by browser -order_by avg(responsetime) -calc avg(responsetime) -limit 100
+header1, Transaction Count and Response Time by Platform
+search, | transactioncount -group_by user.platform
+search, | timeseries -group_by user.platform -order_by avg(responsetime) -calc avg(responsetime) -limit 100

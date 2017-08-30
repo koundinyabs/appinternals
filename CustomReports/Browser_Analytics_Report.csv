@@ -1,0 +1,82 @@
+# TTW Report definition file for the tradefast 'biz data' example report.
+#
+# Short version: we supply the name of the report, the search or searches we want to execute, plus some (optional) auxiliary explanatory text.
+#
+# -------------------------------------------------------
+# Here's a comment describing the report format in case you want to modify this report.
+#
+# Each line defines a report item to add to the report. The line should use the format:
+# TYPE,DATA,[DATA,...]
+#
+# Lines that begin with a # are comments and hence are ignored.
+#
+# Allowed values for TYPE are:
+#   name - name that will show in typeahead and via the 'Analysis' button.
+#   version - version of the TTW report framework used to write this report.
+#             This is a required attribute (use 1 for version 1).
+#   title - string that will appear at the top of the report
+#   description - description of what this report represents
+#   header - section heading
+#   header1 - same as 'header'
+#   header2 - subsection heading
+#   text - a string to display
+#   html - string of HTML code to be rendered
+#   search - a TTW query that executes a search analysis operator
+#   relatedsearch - a TTW query that will be displayed as a hyperlink
+#   variable - Define a variable name and value that can be used throughout the report definition.
+#              Variables must be defined earlier in the file than where they are used.
+#              Two built-in variables are provided (TOPN and TOPN_PHRASE). Use $$TOPN$$ to reference the value displayed
+#              in the UI's "Find the Top" textbox. Use $$TOPN_PHRASE$$ to insert a string built using the the UI's
+#              "Find the top" textbox and combo-box.
+#
+# -------------------------------------------------------
+
+# This is a required field that indicates the format of the report definition itself.
+version,1
+
+# Let's define our report!
+
+name, Browser Analytics Report
+title, Browser Analytics Report
+description,"End user usage data report showing usage broken down by Browser and Operating System"
+header1, Browsers  and Platforms Used by End Users
+
+# --------------------------------------------------------------------------------------------------------
+# Report Section #1: Browser Info
+# --------------------------------------------------------------------------------------------------------
+header2, Browser Summary
+text, Overall browser usage
+
+# Now here the actual meat of the report, which is just a search that you could have typed in to the TTW web UI.
+search,  | barchart -group_by browser -calc transactioncount()
+search,  | timeseries -group_by browser -calc avg(pageload.responsetime)
+search,   | histogram -exclude_default_fields -add_field browser -add_field user.platform -add_field transactiontype
+
+# --------------------------------------------------------------------------------------------------------
+# Report Section #2: Platform/OS Info
+# --------------------------------------------------------------------------------------------------------
+header2, Platform Summary
+text, Overall platform usage.
+
+search,  | barchart -group_by user.platform -calc transactioncount()
+search,  | timeseries -group_by user.platform -calc avg(pageload.responsetime)
+
+
+# --------------------------------------------------------------------------------------------------------
+# Report Section #3: Front-End Delays
+# --------------------------------------------------------------------------------------------------------
+header2, Front-End Delays
+text, Front-End Delays break down
+
+search,  | timeseries -calc avg(pageload.time.frontend)
+search,  | timeseries -calc avg(pageload.time.layout), avg(pageload.time.resources)  -graph_grouping one_graph
+
+
+# --------------------------------------------------------------------------------------------------------
+# Report Section #4: Back-End Delays
+# --------------------------------------------------------------------------------------------------------
+header2, Back-End Delays
+text, Back-End Delays break down
+
+search,  | timeseries -calc avg(pageload.time.backend)
+search,  | timeseries -calc avg(pageload.time.connection), avg(pageload.time.dns), avg(pageload.time.firstrequest), avg(pageload.time.redirect) -graph_grouping one_graph

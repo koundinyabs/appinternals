@@ -1,0 +1,13 @@
+version,1
+name,SLA Violation Report
+title,Performance & Usage Report
+description,"SLA Violation Report"
+header1, Transactions with Major Violations
+search, violation = 'major' | transactioncount -time_rollup 1 min -group_by transactiontype
+search, violation = 'major' | barchart -calc transactioncount() -group_by transactiontype
+header1, Transactions with Minor Violations
+search, violation = 'minor' | transactioncount -time_rollup 1 min -group_by transactiontype
+search, violation = 'minor' | barchart -calc transactioncount() -group_by transactiontype
+header1, Transactions with No Violations
+search,  !(violation = '*') | transactioncount -time_rollup 1 min -group_by transactiontype
+search, !(violation = '*') | barchart -calc transactioncount() -group_by transactiontype

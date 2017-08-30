@@ -1,0 +1,61 @@
+# TTW Report definition file for the tradefast 'biz data' example report.
+#
+# Short version: we supply the name of the report, the search or searches we want to execute, plus some (optional) auxiliary explanatory text.
+#
+# -------------------------------------------------------
+# Here's a comment describing the report format in case you want to modify this report.
+#
+# Each line defines a report item to add to the report. The line should use the format:
+# TYPE,DATA,[DATA,...]
+#
+# Lines that begin with a # are comments and hence are ignored.
+#
+# Allowed values for TYPE are:
+#   name - name that will show in typeahead and via the 'Analysis' button.
+#   version - version of the TTW report framework used to write this report.
+#             This is a required attribute (use 1 for version 1).
+#   title - string that will appear at the top of the report
+#   description - description of what this report represents
+#   header - section heading
+#   header1 - same as 'header'
+#   header2 - subsection heading
+#   text - a string to display
+#   html - string of HTML code to be rendered
+#   search - a TTW query that executes a search analysis operator
+#   relatedsearch - a TTW query that will be displayed as a hyperlink
+#   variable - Define a variable name and value that can be used throughout the report definition.
+#              Variables must be defined earlier in the file than where they are used.
+#              Two built-in variables are provided (TOPN and TOPN_PHRASE). Use $$TOPN$$ to reference the value displayed
+#              in the UI's "Find the Top" textbox. Use $$TOPN_PHRASE$$ to insert a string built using the the UI's
+#              "Find the top" textbox and combo-box.
+#
+# -------------------------------------------------------
+
+# This is a required field that indicates the format of the report definition itself.
+version,1
+
+# Let's define our report!
+
+name, TradeFast Securities Report
+title, TradeFast Securities Report
+description,"Business data report showing trades broken down by Stock Exchange, Security Type, Buy vs. Sell, and User"
+header1, Trade Executions
+
+# --------------------------------------------------------------------------------------------------------
+# Report Section #1: a transactioncount broken down by 'buy' vs. 'sell'
+# --------------------------------------------------------------------------------------------------------
+header2, Summary
+text, Overall trade execution volume.
+
+# Now here the actual meat of the report, which is just a search that you could have typed in to the TTW web UI.
+search, urlparameter = securitytype* | transactioncount -group_by 'parameter=action' -visualization timeseries
+
+# --------------------------------------------------------------------------------------------------------
+# Report Section #2: a histogram broken down by various 'business data' parameters recorded by the agents.
+# --------------------------------------------------------------------------------------------------------
+header2, "Trade Analysis by Stock Exchange, Security Type and User"
+
+# Our second search here finds all transactions that have the 'securitytype' URL parameter, then shows a 'histogram' view for all of those found transactions,
+# where the 'histogram' view will show the values for the bussiness-specicic parameters of 'exchange', 'securitytype', and 'action', as well as the
+# standard 'username' field.
+search, urlparameter = securitytype* | histogram -exclude_default_fields -add_field 'urlparameter=exchange' -add_field 'urlparameter=securitytype' -add_field 'urlparameter=action' -add_field username
