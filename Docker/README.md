@@ -7,7 +7,7 @@ If you want an updated version of the app, feel free to rebuild by cloning the a
 
 ## Building the Docker image
 ### Pre-Requisites
-Docker (for building)
+Docker
 
 ### Building
 
@@ -33,9 +33,10 @@ docker run -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj6
 spring-petclinic:1.5.1
 ```
 
-### Transaction Type Defs -- Coming
-
 # Deploying to Docker Swarm
+
+### Pre-Requisites
+Fully setup and configured Docker Swarm
 
 ## Building
 
@@ -90,3 +91,5 @@ Scaling to the app to 5 instances:
 ```
 docker service scale spring-petclinic=5
 ```
+
+# Transaction Type Defs -- Coming Soon!
