@@ -20,7 +20,9 @@ docker build --build-arg JAR_FILE=spring-petclinic-1.5.1.jar -t spring-petclinic
 docker run -p 8080:8080  spring-petclinic:1.5.1
 ```
 
-Verify the app is running by naviagting to http://<docker_host_IP>:8080/ on a web browser.
+Verify the app is running by naviagting to http://<docker_host_IP>:8080/ on a web browser. You should see something like this:
+
+![alt text](https://raw.githubusercontent.com/koundinyabs/appinternals/master/Docker/PetClinic.png)
 
 ### Run with AppInternals Instrumentation Enabled
 
