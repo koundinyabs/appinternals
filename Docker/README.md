@@ -34,3 +34,59 @@ spring-petclinic:1.5.1
 ```
 
 ### Transaction Type Defs -- Coming
+
+# Deploying to Docker Swarm
+
+## Building
+
+1) SSH to Swarm Master
+2) Copy Pet Clinic JAR file and Dockerfile to Master
+3) Execute the build command
+
+```
+docker build --build-arg JAR_FILE=spring-petclinic-1.5.1.jar -t spring-petclinic:1.5.1 .
+```
+
+4) Run the below command to confirm the new image shows up after the build:
+
+```
+docker images
+```
+
+5) Tag the built Docker image
+
+```
+docker tag spring-petclinic:1.5.1 <master_IP>:<registry_port>/spring-petclinic:1.5.1
+```
+
+6) Push tagged image to Docker Swarm image registry
+```
+docker push <master_IP>:<registry_port>/spring-petclinic:1.5.1
+```
+
+## Running
+
+Without AppInternals instrumentation:
+
+```
+docker service create  --name spring-petclinic \
+-p 8080:8080 -p 9990:9990 \
+<master_IP>:<registry_port>/spring-petclinic:1.5.1
+```
+
+With AppInternals instrumentation:
+
+```
+docker service create  --name spring-petclinic \
+--mount type=bind,source=/opt/Panorama,destination=/opt/Panorama \
+-p 8080:8080 -p 9990:9990 \
+-e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj64.so \
+<master_IP>:<registry_port>/spring-petclinic:1.5.1
+```
+## Scaling
+
+Scaling to the app to 5 instances:
+
+```
+docker service scale spring-petclinic=5
+```
