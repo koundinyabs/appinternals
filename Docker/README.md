@@ -20,6 +20,8 @@ docker build --build-arg JAR_FILE=spring-petclinic-1.5.1.jar -t spring-petclinic
 docker run -p 8080:8080  spring-petclinic:1.5.1
 ```
 
+Verify the app is running by naviagting to http://<docker_host_IP>:8080/ on a web browser.
+
 ### Run with AppInternals Instrumentation Enabled
 
 This assumes the recommended approach of installing an AppInternals agent on the Docker host and mounting a shared volume on the Docker container to share collected trace data. Thus, it assumes initial-mapping has been setup appropriately on the Docker host.
@@ -30,3 +32,5 @@ docker run -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj6
 -v /opt/Panorama:/opt/Panorama \
 spring-petclinic:1.5.1
 ```
+
+### Transaction Type Defs -- Coming
