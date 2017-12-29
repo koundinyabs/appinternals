@@ -5,15 +5,19 @@ The sample app is called Pet Clinic. It has been built from the following repo: 
 
 If you want an updated version of the app, feel free to rebuild by cloning the above repo. The GitHub page has detailed instructions on how to do this.
 
-## Building the Docker image
+## Deploying the Docker image
 ### Pre-Requisites
-Docker
+Docker host running AppInternals 10.10 agent or later
 
 ### Building
-
+1. Download Dockerfile and spring-petclinic-1.5.1.jar to the Docker host
+2. Run the following command to create the PetClinic Docker image
 ```
 docker build --build-arg JAR_FILE=spring-petclinic-1.5.1.jar -t spring-petclinic:1.5.1 .
 ```
+
+Note: The same Dockerfile can be used for other Spring based applications. Just replace the reference to the jar file in the above command while building.
+
 ### Run
 
 ```
@@ -26,7 +30,14 @@ Verify the app is running by naviagting to http://<docker_host_IP>:8080/ on a we
 
 ### Run with AppInternals Instrumentation Enabled
 
-This assumes the recommended approach of installing an AppInternals agent on the Docker host and mounting a shared volume on the Docker container to share collected trace data. Thus, it assumes initial-mapping has been setup appropriately on the Docker host.
+#### Instrumentation Approach/Technique
+This assumes the recommended approach of installing an AppInternals agent on the Docker host and mounting a shared volume on the Docker container to share collected trace data.
+
+Further, the technique used to enable instrumentation is slightly different from the documented option of creating an instrumented image by running the createDockerFile.sh which requires installing the agent on the Docker image build machine. Instead instrumentation is enabled at run time using the `JAVA_TOOL_OPTIONS`.
+
+1. Download `initial-mapping` and `SVCsimple.json` to the Docker host at the following location `/opt/Panorama/hedzup/mn/userdata/config` (assuming the agent is installed at /opt).
+
+2. Run the following command to start the Docker instance AND to have it instrumented. 
 
 ```
 docker run -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj64.so \
