@@ -32,12 +32,14 @@ Note: The same Dockerfile can be used for other Spring based applications. Just 
 ### Run
 
 ```
-docker run -d -p 8080:8080  spring-petclinic:1.5.1
+docker run -p 8080:8080  spring-petclinic:1.5.1
 ```
 
 Verify the app is running by naviagting to http://<docker_host_IP>:8080/ on a web browser. You should see something like this:
 
 ![alt text](https://raw.githubusercontent.com/koundinyabs/appinternals/master/Docker/PetClinic.png)
+
+**Note**: Add -d flag to start the instance detached to get your shell back.
 
 ### Run with AppInternals Instrumentation Enabled
 
@@ -49,11 +51,12 @@ Further, the technique used to enable instrumentation is slightly different from
 Run the following command to start the Docker instance AND to have it instrumented.
 
 ```
-docker run -d -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj64.so \
+docker run -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj64.so \
 -p 8080:8080 \
 -v /opt/Panorama:/opt/Panorama \
 spring-petclinic:1.5.1
 ```
+**Note**: Add -d flag to start the instance detached to get your shell back.
 
 ----
 
