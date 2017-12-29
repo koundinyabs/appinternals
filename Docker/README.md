@@ -5,7 +5,7 @@ The sample app is called Pet Clinic. It has been built from the following repo: 
 
 If you want an updated version of the app, feel free to rebuild by cloning the above repo. The GitHub page has detailed instructions on how to do this.
 
-##Preparing Docker host or Docker Swarm Hosts for instrumentation
+## Preparing Docker host or Docker Swarm Hosts for instrumentation
 1. Install AppInternals 10.10 or later agent on Docker host or Docker Swarm Hosts
 2. Download `initial-mapping` and `SVCsimple.json` to the Docker host/Docker Swarm hosts at the following location `/opt/Panorama/hedzup/mn/userdata/config` (assuming the agent is installed at /opt).
 
