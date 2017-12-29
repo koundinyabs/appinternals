@@ -5,12 +5,17 @@ The sample app is called Pet Clinic. It has been built from the following repo: 
 
 If you want an updated version of the app, feel free to rebuild by cloning the above repo. The GitHub page has detailed instructions on how to do this.
 
+## Preparing Docker host or Docker Swarm Hosts for instrumentation
+1. Install AppInternals 10.10 or later agent on Docker host or Docker Swarm Hosts
+2. Download `initial-mapping` and `SVCsimple.json` to the Docker host/Docker Swarm hosts at the following location `/opt/Panorama/hedzup/mn/userdata/config` (assuming the agent is installed at /opt).
+
+
 ## Deploying the Docker image
 ### Pre-Requisites
-Docker host running AppInternals 10.10 agent or later
+Docker host running AppInternals 10.10 agent or later (see ## Preparing Docker host or Docker Swarm Hosts for instrumentation)
 
 ### Building
-1. Download Dockerfile and spring-petclinic-1.5.1.jar to the Docker host
+1. Download `Dockerfile` and `spring-petclinic-1.5.1.jar` to the Docker host
 2. Run the following command to create the PetClinic Docker image
 ```
 docker build --build-arg JAR_FILE=spring-petclinic-1.5.1.jar -t spring-petclinic:1.5.1 .
@@ -35,9 +40,7 @@ This assumes the recommended approach of installing an AppInternals agent on the
 
 Further, the technique used to enable instrumentation is slightly different from the documented option of creating an instrumented image by running the createDockerFile.sh which requires installing the agent on the Docker image build machine. Instead instrumentation is enabled at run time using the `JAVA_TOOL_OPTIONS`.
 
-1. Download `initial-mapping` and `SVCsimple.json` to the Docker host at the following location `/opt/Panorama/hedzup/mn/userdata/config` (assuming the agent is installed at /opt).
-
-2. Run the following command to start the Docker instance AND to have it instrumented. 
+Run the following command to start the Docker instance AND to have it instrumented.
 
 ```
 docker run -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj64.so \
@@ -48,8 +51,9 @@ spring-petclinic:1.5.1
 
 # Deploying to Docker Swarm
 
-### Pre-Requisites
-Fully setup and configured Docker Swarm
+## Pre-Requisites
+Fully setup and configured Docker Swarm running AppInternals 10.10 agent or later on the Swarm nodes
+(see ## Preparing Docker host or Docker Swarm Hosts for instrumentation)
 
 ## Building
 
