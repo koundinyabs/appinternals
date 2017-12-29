@@ -5,14 +5,14 @@ The sample app is called Pet Clinic. It has been built from the following repo: 
 
 If you want an updated version of the app, feel free to rebuild by cloning the above repo. The GitHub page has detailed instructions on how to do this.
 
-## Preparing Docker host or Docker Swarm Hosts for instrumentation
+##Preparing Docker host or Docker Swarm Hosts for instrumentation
 1. Install AppInternals 10.10 or later agent on Docker host or Docker Swarm Hosts
 2. Download `initial-mapping` and `SVCsimple.json` to the Docker host/Docker Swarm hosts at the following location `/opt/Panorama/hedzup/mn/userdata/config` (assuming the agent is installed at /opt).
 
 
 ## Deploying the Docker image
 ### Pre-Requisites
-Docker host running AppInternals 10.10 agent or later (see [section](## Preparing Docker host or Docker Swarm Hosts for instrumentation))
+Docker host running AppInternals 10.10 agent or later (see the section [Preparing Docker host or Docker Swarm Hosts for instrumentation](#Preparing_Docker_host_or_Docker_Swarm_Hosts_for_instrumentation))
 
 ### Building
 1. Download `Dockerfile` and `spring-petclinic-1.5.1.jar` to the Docker host
@@ -53,7 +53,7 @@ spring-petclinic:1.5.1
 
 ## Pre-Requisites
 Fully setup and configured Docker Swarm running AppInternals 10.10 agent or later on the Swarm nodes
-(see [section](## Preparing Docker host or Docker Swarm Hosts for instrumentation))
+ (see the section [Preparing Docker host or Docker Swarm Hosts for instrumentation](#Preparing_Docker_host_or_Docker_Swarm_Hosts_for_instrumentation))
 
 ## Building
 
@@ -109,4 +109,4 @@ Scaling to the app to 5 instances:
 docker service scale spring-petclinic=5
 ```
 
-# Transaction Type Defs -- Coming Soon!
+# Transaction Type Defs -- Coming Soon
