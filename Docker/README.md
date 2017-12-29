@@ -1,14 +1,20 @@
 # Sample Spring (Java) Based App for Deploying on Docker (and other PaaS)
 
+----
 ## Application
 The sample app is called Pet Clinic. It has been built from the following repo: https://github.com/spring-projects/spring-petclinic
 
 If you want an updated version of the app, feel free to rebuild by cloning the above repo. The GitHub page has detailed instructions on how to do this.
 
+----
+
 ## Preparing Docker host or Docker Swarm Hosts for instrumentation
 1. Install AppInternals 10.10 or later agent on Docker host or Docker Swarm Hosts
 2. Download `initial-mapping` and `SVCsimple.json` to the Docker host/Docker Swarm hosts at the following location `/opt/Panorama/hedzup/mn/userdata/config` (assuming the agent is installed at /opt).
 
+**Note**: If you are using a Mac, there are two ways to run Docker: Docker Toolbox for Mac and Docker for Mac. Docker Toolbox deploys a Linux VM as the Docker on VirtualBox. This gives you full access to the Docker host to install the AppInternals agent. Docker for Mac, on the other hand, uses HyperKit, a lightweight macOS virtualization solution built on top of Hypervisor.framework in macOS 10.10 Yosemite and higher. The HyperKit based VM does not have many of the tools the AppInternals agent installer depends on. So you may not be able to install the agent on it -- if you manage to do this, please do drop me a note.
+
+----
 
 ## Deploying the Docker image
 ### Pre-Requisites
@@ -48,6 +54,8 @@ docker run -e JAVA_TOOL_OPTIONS=-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj6
 -v /opt/Panorama:/opt/Panorama \
 spring-petclinic:1.5.1
 ```
+
+----
 
 # Deploying to Docker Swarm
 
@@ -108,5 +116,7 @@ Scaling to the app to 5 instances:
 ```
 docker service scale spring-petclinic=5
 ```
+
+----
 
 # Transaction Type Defs -- Coming Soon
