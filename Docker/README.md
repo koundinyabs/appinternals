@@ -62,6 +62,10 @@ spring-petclinic:1.5.1
 
 # Deploying to Docker Swarm
 
+## High Level Architecure
+
+![alt text](https://raw.githubusercontent.com/koundinyabs/appinternals/master/Docker/docker-swarm-arch.jpg)
+
 ## Pre-Requisites
 Fully setup and configured Docker Swarm running AppInternals 10.10 agent or later on the Swarm nodes
  (see the section [Preparing Docker host or Docker Swarm Hosts for instrumentation](#preparing-docker-host-or-docker-swarm-hosts-for-instrumentation))
